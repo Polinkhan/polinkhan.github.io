@@ -3,6 +3,7 @@ import { forwardRef } from "react";
 
 const BrandText = forwardRef((props: TypographyProps, ref) => {
   return (
+    // @ts-ignore
     <Stack ref={ref}>
       <Typography
         variant="h2"

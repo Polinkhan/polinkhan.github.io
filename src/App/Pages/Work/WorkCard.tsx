@@ -37,7 +37,7 @@ const WorkCard = ({ index, workDetails }: WorkCardProps) => {
 };
 
 const Details = ({ workDetails }: { workDetails: WorkDetailsType }) => {
-  const { name, description, credential, tools, source, img } = workDetails;
+  const { name, description, credential, tools, source } = workDetails;
 
   return (
     <Stack flex={1} gap={3} justifyContent={"space-between"}>

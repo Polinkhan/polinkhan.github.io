@@ -11,6 +11,7 @@ interface SectionProps extends BoxProps {
 const Section = forwardRef((props: SectionProps, ref) => {
   const { id, children, headerText, headerSubText, ...rest } = props;
   return (
+    // @ts-ignore
     <div id={id} ref={ref}>
       <Box
         pb={1}
