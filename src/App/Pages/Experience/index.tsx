@@ -4,10 +4,13 @@ import Section from "../../Components/section/Section";
 import BrotecsLogo from "../../../assets/logos/Brotecs.png";
 import ExperienceTimeline, { ExperienceTimelineTypes } from "./ExperienceTimeline";
 import { getCurrentMonthDiff } from "../../Common/helper";
+import { experienceRef } from "../../DB/firebase.config";
+import useSnapshot from "../../Hooks/use-snapshot";
 
 const Experience = () => {
+  const { content } = useSnapshot({ ref: experienceRef, defaultValue: { header: "...", label: "..." } });
   return (
-    <Section id="experience" headerText="My Experience" headerSubText="Checkout my Experiences!">
+    <Section id="experience" docRef={experienceRef} headerText={content?.header} headerSubText={content.label}>
       <ExperienceTimeline ExperienceList={ExperienceList} />
     </Section>
   );

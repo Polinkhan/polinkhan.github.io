@@ -1,15 +1,18 @@
-import { Box, BoxProps, Container, Stack, Typography } from "@mui/material";
+import { Box, BoxProps, Container, Stack } from "@mui/material";
 import BrandText from "../brandText/BrandText";
 import { forwardRef } from "react";
+import Editable from "../Editable/Editable";
+import { updateDoc } from "firebase/firestore";
 
 interface SectionProps extends BoxProps {
   id: string;
+  docRef?: any;
   headerText?: string;
   headerSubText?: string;
 }
 
 const Section = forwardRef((props: SectionProps, ref) => {
-  const { id, children, headerText, headerSubText, ...rest } = props;
+  const { id, docRef, children, headerText, headerSubText, ...rest } = props;
   return (
     // @ts-ignore
     <div id={id} ref={ref}>
@@ -23,13 +26,17 @@ const Section = forwardRef((props: SectionProps, ref) => {
         {...rest}
       >
         <Container>
-          <Stack color={"white"}>
-            {headerText && <BrandText>{headerText}</BrandText>}
-            {headerSubText && (
-              <Typography pt={1} pb={4}>
+          <Stack pb={5} color={"white"}>
+            {<BrandText docRef={docRef}>{headerText}</BrandText>}
+            {
+              <Editable
+                onSave={async (newValue) => {
+                  await updateDoc(docRef, { label: newValue });
+                }}
+              >
                 {headerSubText}
-              </Typography>
-            )}
+              </Editable>
+            }
           </Stack>
           {children}
         </Container>

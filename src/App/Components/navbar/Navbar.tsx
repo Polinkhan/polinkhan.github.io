@@ -5,6 +5,8 @@ import { useResponsive } from "../../Hooks/use-responsive";
 import { IoMenu } from "react-icons/io5";
 import useBoolean from "../../Hooks/use-boolean";
 import { FaXmark } from "react-icons/fa6";
+import { useAuthContext } from "../../Hooks/Contexts/useAuthContext";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const { activeSection } = useUIContext();
@@ -30,6 +32,8 @@ const Navbar = () => {
 
 const BrandLogo = () => {
   const fontProps = { fontSize: "1.5rem", fontWeight: 500 };
+  const { isLoggedIn } = useAuthContext();
+
   return (
     <Typography>
       <Typography component={"span"} {...fontProps} color={"secondary.contrastText"}>
@@ -38,6 +42,11 @@ const BrandLogo = () => {
       <Typography component={"span"} {...fontProps} color={"primary.main"}>
         Polin
       </Typography>
+      {isLoggedIn && (
+        <Typography component={"span"} color={"secondary.contrastText"} variant="caption" px={1}>
+          (Admin)
+        </Typography>
+      )}
     </Typography>
   );
 };
@@ -66,10 +75,13 @@ const MobileNavList = () => {
 
 interface NavListProps {
   direction?: "row" | "column";
-  onClickLink?: (any: any) => any | undefined;
+  onClickLink?: (any?: any) => any | undefined;
 }
 
 const NavList = ({ direction = "row", onClickLink }: NavListProps) => {
+  const { isLoggedIn } = useAuthContext();
+  const navigate = useNavigate();
+
   return (
     <Stack direction={direction} alignItems={"center"} gap={4}>
       {navlist.map(({ label, to }, i) => {
@@ -83,9 +95,14 @@ const NavList = ({ direction = "row", onClickLink }: NavListProps) => {
           </Box>
         );
       })}
-      <CustomButton component={"a"} href="#contact" onClick={onClickLink}>
-        Contact Me
-      </CustomButton>
+
+      {isLoggedIn ? (
+        <CustomButton onClick={() => navigate("/manage")}>Manage Site</CustomButton>
+      ) : (
+        <CustomButton component={"a"} href="#contact" onClick={onClickLink}>
+          Contact Me
+        </CustomButton>
+      )}
     </Stack>
   );
 };

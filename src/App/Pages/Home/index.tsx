@@ -1,4 +1,4 @@
-import { Box, Stack, Typography } from "@mui/material";
+import { Box, Stack } from "@mui/material";
 import HeroBanner from "../../../assets/images/HeroBanner.png";
 import CustomButton from "../../Components/button/CustomButton";
 import Lottie from "lottie-react";
@@ -6,17 +6,24 @@ import HeroLottie from "../../../assets/lottie/HeroLottie.json";
 import Section from "../../Components/section/Section";
 import { useInView } from "react-intersection-observer";
 import { useUIContext } from "../../Hooks/Contexts/useUIContext";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useResponsive } from "../../Hooks/use-responsive";
+import { onSnapshot, updateDoc } from "firebase/firestore";
+import { homeRef } from "../../DB/firebase.config";
+import Editable from "../../Components/Editable/Editable";
+import useSnapshot from "../../Hooks/use-snapshot";
 
 const Home = ({}) => {
   const { ref, inView } = useInView({ threshold: 0.8 });
   const { setActiveSection } = useUIContext();
   const isMediumScreen = useResponsive("down", "lg");
+  // const [content, setContent] = useState({ logo: "", header: "...", subHeader: [] });
 
   useEffect(() => {
     setActiveSection(inView);
   }, [inView]);
+
+  const { content } = useSnapshot({ ref: homeRef, defaultValue: { logo: "", header: "...", subHeader: [] } });
 
   return (
     <Section
@@ -30,10 +37,25 @@ const Home = ({}) => {
       sx={{ backgroundImage: `url(${HeroBanner})`, backgroundRepeat: "repeat", backgroundSize: "466px" }}
     >
       <Stack gap={10} direction={{ md: "row" }} alignItems={"center"} justifyContent={"space-between"}>
-        <Stack flex={1} alignItems={{ xs: "center", md: "start" }} gap={5}>
-          <Typography variant="h2" color={"white"} textAlign={{ xs: "center", md: "start" }}>
-            Software Engineer
-          </Typography>
+        <Stack flex={1} alignItems={{ xs: "center", md: "start" }} gap={1}>
+          <Editable
+            TypographyProps={{ variant: "h2" }}
+            onSave={async (newValue) => {
+              await updateDoc(homeRef, { header: newValue });
+            }}
+          >
+            {content.header}
+          </Editable>
+          <Editable
+            TypographyProps={{ variant: "body1", color: "grey.500" }}
+            onSave={async (newValue) => {
+              await updateDoc(homeRef, { subHeader: newValue.split(" ") });
+            }}
+            TextFielsProps={{ helperText: "Space separated text" }}
+          >
+            {content?.subHeader?.join(" ")}
+          </Editable>
+
           <CustomButton component={"a"} href="#work">
             See My Work
           </CustomButton>

@@ -10,8 +10,8 @@ import { FaAngleDown } from "react-icons/fa6";
 export type WorkDetailsType = {
   name: string;
   description: string;
-  credential: {
-    name: string;
+  credentials: {
+    username: string;
     password: string;
   };
   tools: string[];
@@ -33,9 +33,9 @@ const WorkCard = ({ index, workDetails }: WorkCardProps) => {
 
   return (
     <Stack p={{ xs: 2, md: 5 }} bgcolor={"secondary.main"} direction={{ md: "row" }} gap={5} borderRadius={1.5}>
-      {isOdd && <Banner src={workDetails.img} />}
+      {isOdd && <Banner src={workDetails?.img} />}
       <Details workDetails={workDetails} />
-      {!isOdd && <Banner src={workDetails.img} />}
+      {!isOdd && <Banner src={workDetails?.img} />}
     </Stack>
   );
 };
@@ -43,15 +43,14 @@ const WorkCard = ({ index, workDetails }: WorkCardProps) => {
 const Details = ({ workDetails }: { workDetails: WorkDetailsType }) => {
   const { open, onToggle } = useBoolean();
   const isMediumScreen = useResponsive("up", "md");
-  const { name, description, credential, tools, source } = workDetails;
 
   return (
     <Stack flex={1} justifyContent={"space-between"}>
-      <BrandText variant="h5">{name}</BrandText>
+      <BrandText variant="h5">{workDetails?.name}</BrandText>
 
       {!isMediumScreen && (
-        <Stack direction={"row"} alignItems={"center"} gap={1} sx={{ cursor: "pointer" }}>
-          <Typography py={2} color={"grey.500"} variant="body2" onClick={onToggle}>
+        <Stack direction={"row"} alignItems={"center"} gap={1} sx={{ cursor: "pointer" }} onClick={onToggle}>
+          <Typography py={2} color={"grey.500"} variant="body2">
             View {open ? "less" : "more"}
           </Typography>
           <Icon
@@ -68,26 +67,26 @@ const Details = ({ workDetails }: { workDetails: WorkDetailsType }) => {
       )}
       <Collapse in={isMediumScreen || open}>
         <Typography pb={3} color={"grey.500"} variant="body2">
-          {description}
+          {workDetails?.description}
         </Typography>
 
         <Stack color={"grey.500"} pb={3}>
-          <Typography variant="body2">Name : {credential.name}</Typography>
-          <Typography variant="body2">Password : {credential.password}</Typography>
+          <Typography variant="body2">Name : {workDetails?.credentials?.username}</Typography>
+          <Typography variant="body2">Password : {workDetails?.credentials?.password}</Typography>
         </Stack>
       </Collapse>
 
       <Stack direction={"row"} color={"grey.500"} gap={2} pb={3}>
-        {tools.map((tool, i) => (
+        {workDetails?.tools?.map((tool, i) => (
           <DevTool name={tool} key={i} />
         ))}
       </Stack>
 
       <Stack direction={"row"} gap={3}>
-        <LinkButton component={"a"} href={source.live} startIcon={<FaEye />}>
+        <LinkButton component={"a"} href={workDetails?.source?.live} startIcon={<FaEye />}>
           Live
         </LinkButton>
-        <LinkButton component={"a"} href={source.github} startIcon={<FaGithub />}>
+        <LinkButton component={"a"} href={workDetails?.source?.github} startIcon={<FaGithub />}>
           Source
         </LinkButton>
       </Stack>

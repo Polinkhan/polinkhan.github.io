@@ -17,17 +17,22 @@ import mongodb from "../../../assets/logos/mongodb.svg";
 import mysql from "../../../assets/logos/Mysql.png";
 import python from "../../../assets/logos/Python.png";
 import reactNative from "../../../assets/logos/ReactNative.png";
+import { skillRef } from "../../DB/firebase.config";
+import useSnapshot from "../../Hooks/use-snapshot";
 
 const Skill = () => {
   // const { ref, inView } = useInView({});
   // console.log("Skill", inView);
 
+  const { content } = useSnapshot({ ref: skillRef, defaultValue: { header: "...", label: "..." } });
+
   return (
     <Section
       id="skill"
       // ref={ref}
-      headerText="My skills"
-      headerSubText="Here are some technologies I've used!"
+      docRef={skillRef}
+      headerText={content?.header}
+      headerSubText={content?.label}
     >
       <Stack gap={5} direction={"row"} flexWrap={"wrap"} justifyContent={"center"}>
         {skillList.map((skill) => (

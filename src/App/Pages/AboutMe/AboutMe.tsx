@@ -4,13 +4,16 @@ import profile from "../../../assets/images/profile.jpg";
 import useBoolean from "../../Hooks/use-boolean";
 import { useResponsive } from "../../Hooks/use-responsive";
 import { FaAngleDown } from "react-icons/fa6";
+import { aboutRef } from "../../DB/firebase.config";
+import useSnapshot from "../../Hooks/use-snapshot";
 
 const AboutMe = () => {
   const { open, onToggle } = useBoolean();
   const isMediumScreen = useResponsive("up", "md");
+  const { content } = useSnapshot({ ref: aboutRef, defaultValue: { header: "...", label: "..." } });
 
   return (
-    <Section id="about" headerText="About Me">
+    <Section id="about" docRef={aboutRef} headerText={content.header} headerSubText={content.label}>
       <Stack direction={{ md: "row" }} gap={{ xs: 2, md: 10 }} py={3} alignItems={"center"}>
         {!isMediumScreen && (
           <Stack direction={"row"} alignItems={"center"} gap={1} sx={{ cursor: "pointer" }}>

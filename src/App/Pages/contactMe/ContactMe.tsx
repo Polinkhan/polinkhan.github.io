@@ -9,12 +9,16 @@ import { useSnackbar } from "notistack";
 // Icons
 import { FaPhone } from "react-icons/fa6";
 import { IoMail } from "react-icons/io5";
+import useSnapshot from "../../Hooks/use-snapshot";
+import { contactRef } from "../../DB/firebase.config";
 
 const ContactMe = () => {
   const [open, setOpen] = useState(false);
+  const { content } = useSnapshot({ ref: contactRef, defaultValue: { header: "...", label: "..." } });
 
   return (
-    <Section id="contact" headerText="Contact me" headerSubText="Feel free to contact me at anytime">
+    <Section id="contact" docRef={contactRef} headerText={content.header} headerSubText={content.label}>
+      {/* <Section id="contact" headerText="Contact me" headerSubText="Feel free to contact me at anytime"> */}
       <Stack direction={{ md: "row" }} my={5} gap={10}>
         <Form setOpen={setOpen} />
         <ContactInfo />
