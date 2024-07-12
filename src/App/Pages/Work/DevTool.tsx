@@ -12,7 +12,7 @@ const DevTool = ({ name }: { name: string }) => {
         return (
           <>
             <FaReact />
-            <Typography>React Native</Typography>
+            <Typography variant="body2">React Native</Typography>
           </>
         );
       }
@@ -20,7 +20,7 @@ const DevTool = ({ name }: { name: string }) => {
         return (
           <>
             <FaReact />
-            <Typography>React</Typography>
+            <Typography variant="body2">React</Typography>
           </>
         );
       }
@@ -28,7 +28,7 @@ const DevTool = ({ name }: { name: string }) => {
         return (
           <>
             <FaNodeJs />
-            <Typography>Node JS</Typography>
+            <Typography variant="body2">Node JS</Typography>
           </>
         );
       }
@@ -36,7 +36,7 @@ const DevTool = ({ name }: { name: string }) => {
         return (
           <>
             <SiExpress />
-            <Typography>Express JS</Typography>
+            <Typography variant="body2">Express JS</Typography>
           </>
         );
       }
@@ -44,7 +44,7 @@ const DevTool = ({ name }: { name: string }) => {
         return (
           <>
             <GrMysql />
-            <Typography>MySQL</Typography>
+            <Typography variant="body2">MySQL</Typography>
           </>
         );
       }
@@ -52,7 +52,7 @@ const DevTool = ({ name }: { name: string }) => {
         return (
           <>
             <SiSocketdotio />
-            <Typography>Web Socket</Typography>
+            <Typography variant="body2">Web Socket</Typography>
           </>
         );
       }
@@ -60,7 +60,7 @@ const DevTool = ({ name }: { name: string }) => {
         return (
           <>
             <IoLogoFirebase />
-            <Typography>Firebase</Typography>
+            <Typography variant="body2">Firebase</Typography>
           </>
         );
       }
@@ -68,7 +68,7 @@ const DevTool = ({ name }: { name: string }) => {
         return (
           <>
             <SiTypescript />
-            <Typography>Typescript</Typography>
+            <Typography variant="body2">Typescript</Typography>
           </>
         );
       }

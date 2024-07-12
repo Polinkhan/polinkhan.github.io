@@ -6,6 +6,7 @@ import TimelineContent from "@mui/lab/TimelineContent";
 import TimelineDot from "@mui/lab/TimelineDot";
 import { Box, Stack, Typography } from "@mui/material";
 import eduCap from "../../../assets/logos/educationCap.svg";
+import { useResponsive } from "../../Hooks/use-responsive";
 
 export type EducationTimelineTypes = {
   institutionName: string;
@@ -15,13 +16,15 @@ export type EducationTimelineTypes = {
 };
 
 const EducationTimeline = ({ DegreeList }: { DegreeList: EducationTimelineTypes[] }) => {
+  const isSmallScreen = useResponsive("down", "sm");
+
   return (
     <Timeline
       sx={{
         [`& .${timelineItemClasses.root}:before`]: {
           flex: 0,
           padding: 0,
-          pl: "100px",
+          pl: isSmallScreen ? "30px" : "100px",
         },
       }}
     >
@@ -35,7 +38,7 @@ const EducationTimeline = ({ DegreeList }: { DegreeList: EducationTimelineTypes[
               </TimelineDot>
               {!isLast && <TimelineConnector />}
             </TimelineSeparator>
-            <TimelineContent height={120}>
+            <TimelineContent height={isSmallScreen ? 80 : 50} mb={10}>
               <Stack gap={0.5}>
                 <Typography>{institutionName}</Typography>
                 <Typography fontSize={12}>{degreeName}</Typography>

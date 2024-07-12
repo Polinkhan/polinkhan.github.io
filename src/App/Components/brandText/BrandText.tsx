@@ -2,6 +2,7 @@ import { Stack, Typography, TypographyProps } from "@mui/material";
 import { forwardRef } from "react";
 
 const BrandText = forwardRef((props: TypographyProps, ref) => {
+  const { sx, ...rest } = props;
   return (
     // @ts-ignore
     <Stack ref={ref}>
@@ -19,8 +20,9 @@ const BrandText = forwardRef((props: TypographyProps, ref) => {
             width: " 3.4375rem",
             bgcolor: "primary.main",
           },
+          ...sx,
         }}
-        {...props}
+        {...rest}
       />
     </Stack>
   );

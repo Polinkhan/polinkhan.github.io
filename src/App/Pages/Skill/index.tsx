@@ -29,7 +29,7 @@ const Skill = () => {
       headerText="My skills"
       headerSubText="Here are some technologies I've used!"
     >
-      <Stack gap={3} direction={"row"} flexWrap={"wrap"}>
+      <Stack gap={5} direction={"row"} flexWrap={"wrap"} justifyContent={"center"}>
         {skillList.map((skill) => (
           <SkillIconWIthLabel key={skill.label} {...skill} />
         ))}

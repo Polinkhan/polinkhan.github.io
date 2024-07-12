@@ -15,7 +15,7 @@ const ContactMe = () => {
 
   return (
     <Section id="contact" headerText="Contact me" headerSubText="Feel free to contact me at anytime">
-      <Stack direction={"row"} my={5} gap={10}>
+      <Stack direction={{ md: "row" }} my={5} gap={10}>
         <Form setOpen={setOpen} />
         <ContactInfo />
       </Stack>
@@ -53,7 +53,7 @@ const Form = ({ setOpen }: any) => {
       <CustomTextField id="name" label={"Name"} required />
       <CustomTextField id="email" label={"Email"} type="email" required />
       <CustomTextField id="message" label={"Message"} multiline rows={10} required />
-      <CustomButton type="submit" sx={{ alignSelf: "flex-start" }}>
+      <CustomButton type="submit" variant="outlined">
         Send Message
       </CustomButton>
       <Button type="reset" ref={ref} />
@@ -63,7 +63,7 @@ const Form = ({ setOpen }: any) => {
 
 const ContactInfo = () => {
   return (
-    <Stack flex={1} py={4} gap={2}>
+    <Stack flex={1} py={4} gap={2} alignItems={"center"}>
       <Stack direction={"row"} alignItems={"center"} gap={1.5}>
         <FaPhone />
         <Typography color={"secondary.contrastText"}>01756-160530</Typography>
