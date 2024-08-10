@@ -1,7 +1,6 @@
 import { menuItemClasses } from "@mui/material/MenuItem";
 import Popover, { PopoverOrigin, PopoverProps } from "@mui/material/Popover";
 
-import { alpha, useTheme } from "@mui/material";
 import styled from "styled-components";
 interface MenuPopoverProps extends PopoverProps {
   arrow?: arrowPlacement;
@@ -164,7 +163,6 @@ export function getPopoverPosition(arrow: string) {
 }
 
 export const StyledArrow = styled("span")<{ arrow: any }>(({ arrow }) => {
-  const theme = useTheme();
   const SIZE = 14;
 
   const POSITION = -(SIZE / 2) + 0.5;

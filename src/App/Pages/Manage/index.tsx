@@ -1,19 +1,19 @@
-import { Box, CircularProgress, Container, Fab, Stack, TextField, Typography } from "@mui/material";
-import { Fragment, useEffect, useState } from "react";
+import { CircularProgress, Container, Fab, Stack, Typography } from "@mui/material";
+import { useEffect, useState } from "react";
 
 import { useAuthContext } from "../../Hooks/Contexts/useAuthContext";
 import { useNavigate } from "react-router-dom";
 import { collection, doc, getDocs, updateDoc } from "firebase/firestore";
 import { db } from "../../DB/firebase.config";
 import BrandText from "../../Components/brandText/BrandText";
-import CustomTextField, { ManageTextField } from "../../Components/textfield/CustomTextField";
-import { FaAngleDown, FaCheck, FaSortDown } from "react-icons/fa6";
+import { ManageTextField } from "../../Components/textfield/CustomTextField";
+import { FaCheck, FaSortDown } from "react-icons/fa6";
 
 const ManageSite = () => {
   const navigate = useNavigate();
   const { isLoggedIn } = useAuthContext();
   const [docs, setDocs] = useState<any>();
-  const [updatedField, setUpdatedField] = useState({} as any);
+  const [setUpdatedField] = useState({} as any);
 
   useEffect(() => {
     if (!isLoggedIn) navigate("/", { replace: true });
@@ -54,7 +54,10 @@ const ManageSite = () => {
           {Object.keys(docs).map((doc) => {
             return (
               <Stack key={doc}>
-                <BrandText>{doc.toUpperCase()}</BrandText>
+                {
+                  //@ts-ignore
+                  <BrandText>{doc.toUpperCase()}</BrandText>
+                }
                 <Editor doc={docs[doc]} parrant={[doc]} setUpdatedField={setUpdatedField} />
               </Stack>
             );
@@ -110,7 +113,7 @@ const Editor = ({ doc, parrant, setUpdatedField }: { doc: any; parrant: string[]
         }
 
         if (Array.isArray(doc[key])) {
-          const isArrayOfString = doc[key].every((data) => typeof data === "string");
+          const isArrayOfString = doc[key].every((data: any) => typeof data === "string");
           if (isArrayOfString) {
             return (
               <ManageTextField
@@ -128,7 +131,7 @@ const Editor = ({ doc, parrant, setUpdatedField }: { doc: any; parrant: string[]
               <Stack gap={1}>
                 <FaSortDown />
                 <Stack pl={1}>
-                  {doc[key].map((doc, i) => (
+                  {doc[key].map((doc: any, i: any) => (
                     <Editor
                       key={`${key}-${i}`}
                       doc={doc}
