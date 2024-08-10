@@ -13,6 +13,11 @@ interface SectionProps extends BoxProps {
 
 const Section = forwardRef((props: SectionProps, ref) => {
   const { id, docRef, children, headerText, headerSubText, ...rest } = props;
+
+  const onSave = async (newValue: any, fieldname: string) => {
+    await updateDoc(docRef, { [fieldname]: newValue });
+  };
+
   return (
     // @ts-ignore
     <div id={id} ref={ref}>
@@ -27,13 +32,13 @@ const Section = forwardRef((props: SectionProps, ref) => {
       >
         <Container>
           <Stack pb={5} color={"white"}>
-            {<BrandText docRef={docRef}>{headerText}</BrandText>}
             {
-              <Editable
-                onSave={async (newValue) => {
-                  await updateDoc(docRef, { label: newValue });
-                }}
-              >
+              <BrandText fieldname="header" docRef={docRef} onSave={onSave}>
+                {headerText}
+              </BrandText>
+            }
+            {
+              <Editable fieldname="label" onSave={onSave}>
                 {headerSubText}
               </Editable>
             }

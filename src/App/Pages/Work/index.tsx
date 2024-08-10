@@ -1,6 +1,6 @@
 import { Stack } from "@mui/material";
 import Section from "../../Components/section/Section";
-import WorkCard, { WorkDetailsType } from "./WorkCard";
+import WorkCard, { WorkListType } from "./WorkCard";
 // import { useInView } from "react-intersection-observer";
 
 // import nippon from "../../../assets/images/nippon.png";
@@ -9,19 +9,19 @@ import WorkCard, { WorkDetailsType } from "./WorkCard";
 // import pcMonitor from "../../../assets/images/pcMonitor.png";
 import CustomButton from "../../Components/button/CustomButton";
 import { workRef } from "../../DB/firebase.config";
-import useSnapshot from "../../Hooks/use-snapshot";
+import useFirebaseSnapshot from "../../Hooks/use-snapshot";
 
 const Work = ({}: any) => {
-  const { content } = useSnapshot({
+  const { content } = useFirebaseSnapshot({
     ref: workRef,
-    defaultValue: { header: "...", label: "...", workList: [] as WorkDetailsType[] },
+    defaultValue: { header: "...", label: "...", workList: [] as WorkListType[] },
   });
 
   return (
     <Section id="work" docRef={workRef} headerText={content.header} headerSubText={content.label}>
       <Stack gap={4}>
-        {content.workList.map((workDetail: any, i: any) => (
-          <WorkCard key={i} index={i} workDetails={workDetail} />
+        {content.workList.map((_: any, i: any) => (
+          <WorkCard key={i} index={i} workList={content.workList} />
         ))}
         <CustomButton variant="outlined" sx={{ alignSelf: "center" }}>
           See more

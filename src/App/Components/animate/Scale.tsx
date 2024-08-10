@@ -9,14 +9,6 @@ const defaultAnimations = {
   exit: { scale: 1.01 },
 };
 
-// const buildAnimation = (slide: SlideType = "Right", value: number = 10) => {
-//   return {
-//     initial: { opacity: 1, x: animate[slide].x * value, y: animate[slide].y * value },
-//     animate: { opacity: 1, x: 0, y: 0 },
-//     exit: { opacity: 1, x: -(animate[slide].x * value), y: -(animate[slide].y * value) },
-//   };
-// };
-
 interface SlideProps extends AnimationProps {
   children: ReactNode;
   id?: string;

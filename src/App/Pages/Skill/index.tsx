@@ -18,13 +18,13 @@ import mysql from "../../../assets/logos/Mysql.png";
 import python from "../../../assets/logos/Python.png";
 import reactNative from "../../../assets/logos/ReactNative.png";
 import { skillRef } from "../../DB/firebase.config";
-import useSnapshot from "../../Hooks/use-snapshot";
+import useFirebaseSnapshot from "../../Hooks/use-snapshot";
 
 const Skill = () => {
   // const { ref, inView } = useInView({});
   // console.log("Skill", inView);
 
-  const { content } = useSnapshot({ ref: skillRef, defaultValue: { header: "...", label: "..." } });
+  const { content } = useFirebaseSnapshot({ ref: skillRef, defaultValue: { header: "...", label: "..." } });
 
   return (
     <Section

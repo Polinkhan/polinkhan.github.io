@@ -1,10 +1,10 @@
 import Section from "../../Components/section/Section";
 import { educationRef } from "../../DB/firebase.config";
-import useSnapshot from "../../Hooks/use-snapshot";
+import useFirebaseSnapshot from "../../Hooks/use-snapshot";
 import EducationTimeline, { EducationTimelineTypes } from "./EducationTimeline";
 
 const Education = () => {
-  const { content } = useSnapshot({ ref: educationRef, defaultValue: { header: "...", label: "..." } });
+  const { content } = useFirebaseSnapshot({ ref: educationRef, defaultValue: { header: "...", label: "..." } });
 
   return (
     <Section id="education" docRef={educationRef} headerText={content.header} headerSubText={content.label}>

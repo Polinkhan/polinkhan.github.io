@@ -6,12 +6,12 @@ import HeroLottie from "../../../assets/lottie/HeroLottie.json";
 import Section from "../../Components/section/Section";
 import { useInView } from "react-intersection-observer";
 import { useUIContext } from "../../Hooks/Contexts/useUIContext";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useResponsive } from "../../Hooks/use-responsive";
-import { onSnapshot, updateDoc } from "firebase/firestore";
+import { updateDoc } from "firebase/firestore";
 import { homeRef } from "../../DB/firebase.config";
 import Editable from "../../Components/Editable/Editable";
-import useSnapshot from "../../Hooks/use-snapshot";
+import useFirebaseSnapshot from "../../Hooks/use-snapshot";
 
 const Home = ({}) => {
   const { ref, inView } = useInView({ threshold: 0.8 });
@@ -23,7 +23,7 @@ const Home = ({}) => {
     setActiveSection(inView);
   }, [inView]);
 
-  const { content } = useSnapshot({ ref: homeRef, defaultValue: { logo: "", header: "...", subHeader: [] } });
+  const { content } = useFirebaseSnapshot({ ref: homeRef, defaultValue: { logo: "", header: "...", subHeader: [] } });
 
   return (
     <Section
@@ -39,17 +39,19 @@ const Home = ({}) => {
       <Stack gap={10} direction={{ md: "row" }} alignItems={"center"} justifyContent={"space-between"}>
         <Stack flex={1} alignItems={{ xs: "center", md: "start" }} gap={1}>
           <Editable
+            fieldname="header"
             TypographyProps={{ variant: "h2" }}
-            onSave={async (newValue) => {
-              await updateDoc(homeRef, { header: newValue });
+            onSave={async (newValue, fieldname) => {
+              await updateDoc(homeRef, { [fieldname]: newValue });
             }}
           >
             {content.header}
           </Editable>
           <Editable
+            fieldname="subHeader"
             TypographyProps={{ variant: "body1", color: "grey.500" }}
-            onSave={async (newValue) => {
-              await updateDoc(homeRef, { subHeader: newValue.split(" ") });
+            onSave={async (newValue, fieldname) => {
+              await updateDoc(homeRef, { [fieldname]: newValue.split(" ") });
             }}
             TextFielsProps={{ helperText: "Space separated text" }}
           >

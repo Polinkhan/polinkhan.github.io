@@ -5,12 +5,12 @@ import useBoolean from "../../Hooks/use-boolean";
 import { useResponsive } from "../../Hooks/use-responsive";
 import { FaAngleDown } from "react-icons/fa6";
 import { aboutRef } from "../../DB/firebase.config";
-import useSnapshot from "../../Hooks/use-snapshot";
+import useFirebaseSnapshot from "../../Hooks/use-snapshot";
 
 const AboutMe = () => {
   const { open, onToggle } = useBoolean();
   const isMediumScreen = useResponsive("up", "md");
-  const { content } = useSnapshot({ ref: aboutRef, defaultValue: { header: "...", label: "..." } });
+  const { content } = useFirebaseSnapshot({ ref: aboutRef, defaultValue: { header: "...", label: "..." } });
 
   return (
     <Section id="about" docRef={aboutRef} headerText={content.header} headerSubText={content.label}>

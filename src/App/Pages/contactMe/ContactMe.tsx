@@ -9,12 +9,12 @@ import { useSnackbar } from "notistack";
 // Icons
 import { FaPhone } from "react-icons/fa6";
 import { IoMail } from "react-icons/io5";
-import useSnapshot from "../../Hooks/use-snapshot";
+import useFirebaseSnapshot from "../../Hooks/use-snapshot";
 import { contactRef } from "../../DB/firebase.config";
 
 const ContactMe = () => {
   const [open, setOpen] = useState(false);
-  const { content } = useSnapshot({ ref: contactRef, defaultValue: { header: "...", label: "..." } });
+  const { content } = useFirebaseSnapshot({ ref: contactRef, defaultValue: { header: "...", label: "..." } });
 
   return (
     <Section id="contact" docRef={contactRef} headerText={content.header} headerSubText={content.label}>

@@ -1,18 +1,20 @@
 import { Stack, TypographyProps } from "@mui/material";
 import { forwardRef } from "react";
 import Editable from "../Editable/Editable";
-import { updateDoc } from "firebase/firestore";
 
 interface BrandTextProps extends TypographyProps {
   docRef?: any;
+  onSave: (newValue: any, fieldname: string) => Promise<any>;
+  fieldname: string;
 }
 
 const BrandText = forwardRef((props: BrandTextProps, ref) => {
-  const { docRef, children, sx, ...rest } = props;
+  const { docRef, children, sx, onSave, fieldname, ...rest } = props;
   return (
     // @ts-ignore
     <Stack ref={ref}>
       <Editable
+        fieldname={fieldname}
         TypographyProps={{
           variant: "h2",
           color: "white",
@@ -29,10 +31,9 @@ const BrandText = forwardRef((props: BrandTextProps, ref) => {
             },
             ...sx,
           },
+          ...rest,
         }}
-        onSave={async (newValue) => {
-          await updateDoc(docRef, { header: newValue });
-        }}
+        onSave={onSave}
       >
         {children}
       </Editable>

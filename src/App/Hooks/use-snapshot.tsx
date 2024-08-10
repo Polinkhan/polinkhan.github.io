@@ -1,24 +1,38 @@
-import { DocumentData, DocumentReference, onSnapshot } from "firebase/firestore";
+import { DocumentData, DocumentReference, DocumentSnapshot, FirestoreError, onSnapshot } from "firebase/firestore";
 import { useEffect, useState } from "react";
 
-const useSnapshot = ({
-  ref,
-  defaultValue,
-}: {
+// interfaces
+interface UseFirebaseSnapshotProps {
   ref: DocumentReference<DocumentData, DocumentData>;
   defaultValue: any;
-}) => {
+}
+
+// types
+type onNext = (snapshot: DocumentSnapshot<DocumentData>) => void;
+type onError = (error: FirestoreError) => void;
+
+// -----------------------------------------------------------------------------------
+
+const useFirebaseSnapshot = ({ ref, defaultValue }: UseFirebaseSnapshotProps) => {
+  // State
   const [content, setContent] = useState<any>(defaultValue);
 
-  useEffect(() => {
-    const unsub = onSnapshot(ref, (doc) => {
-      setContent(doc.data() as any);
-    });
+  // Functions
+  const onNext: onNext = (doc) => {
+    doc.exists() && setContent(doc.data());
+  };
 
-    return () => unsub();
+  const onError: onError = (error) => {
+    console.log("error => ", error);
+  };
+
+  // Lifecycle hooks
+  useEffect(() => {
+    const unsub = onSnapshot(ref, onNext, onError);
+    return unsub;
   }, []);
 
   return { content };
 };
 
-export default useSnapshot;
+export default useFirebaseSnapshot;
