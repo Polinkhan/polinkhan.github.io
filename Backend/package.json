@@ -1,0 +1,22 @@
+{
+  "name": "Portfolio",
+  "version": "1.0.0",
+  "description": "Backend for portfolio",
+  "main": "app.js",
+  "author": "Abu Sayed Polin",
+  "license": "MIT",
+  "scripts": {
+    "start": "node app",
+    "dev": "nodemon app",
+    "seed": "ts-node prisma/seed.ts"
+  },
+  "dependencies": {
+    "@prisma/client": "^5.19.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "morgan": "^1.10.0",
+    "nodemon": "^3.1.4",
+    "prisma": "^5.19.1"
+  }
+}
